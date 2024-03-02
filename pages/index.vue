@@ -79,6 +79,10 @@
 
 <template>
 	<section class="section">
+		<UserLocation/>
+	</section>
+
+	<section class="section">
 		<template v-if="isRainExpected(threshold)">
 			<div class="card card-rain text-center">
 				<p class="emoji">

@@ -94,6 +94,7 @@
 				<p class="description">La probabilidad de lluvia es mayor a {{threshold}}%</p>
 			</div>
 		</template>
+		
 		<template v-else>
 			<div class="card card-sunny text-center">
 				<p class="emoji">

@@ -1,5 +1,6 @@
 <script setup>
-	import { useGeolocation } from '@/composables/useGeoLocation'
+	import { useGeolocation } from './composables/useGeoLocation'
+
 	const {kordinat} = useGeolocation()
 	const posisiUser = computed(()=>({
 		lat : kordinat.value.latitude,

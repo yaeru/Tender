@@ -158,7 +158,7 @@
 
 	<template v-else>
 		<section class="section">
-			<h2 class="text-center">Cargando...</h2>
+			<h2 class="text-center">Cargando... 1</h2>
 		</section>
 	</template>
 

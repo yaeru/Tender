@@ -1,18 +1,19 @@
 <script setup lang="ts">
 	import { ref } from 'vue';
-	import { useGeolocation } from "~/composables/useGeoLocation";
+	//import { useGeolocation } from "../composables/useGeoLocation";
 
-	const {} = useGeolocation();
+	const { sayHello } = useUtils();
+	sayHello();
 
-	const {kordinat} = useGeolocation()
+	// const {kordinat} = useGeolocation()
 
-	const posisiUser = computed(()=>({
-		lat : kordinat.value.latitude,
-		lng : kordinat.value.longitude
-	}))
-	watchEffect(() => {
-		console.log({ p: posisiUser.value });
-	})
+	// const posisiUser = computed(()=>({
+	// 	lat : kordinat.value.latitude,
+	// 	lng : kordinat.value.longitude
+	// }))
+	// watchEffect(() => {
+	// 	console.log({ p: posisiUser.value });
+	// })
 
 	// Variable para controlar la carga de la API
 	const loading = ref(true);
@@ -102,7 +103,7 @@
 <template>
 	<template v-if="!loading">
 		<section class="section">
-			<h2 class="text-center">Lat: {{posisiUser.lat}}, Long: {{posisiUser.lng}}</h2>
+			<!-- <h2 class="text-center">Lat: {{posisiUser.lat}}, Long: {{posisiUser.lng}}</h2> -->
 		</section>
 
 		<section class="section">

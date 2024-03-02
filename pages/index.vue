@@ -79,7 +79,7 @@
 
 <template>
 	<section class="section">
-		<UserLocation/>
+		<UserLocation />
 	</section>
 
 	<section class="section">

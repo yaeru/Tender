@@ -1,8 +1,13 @@
 <script setup lang="ts">
+
+	import { ref } from 'vue';
+
 	// Variable para controlar la carga de la API
 	const loading = ref(true);
 
-	
+	setTimeout(() => {
+		loading.value = false;
+	}, 1000);
 
 	const params = {
 		"latitude": -34.9215,
@@ -137,7 +142,9 @@
 	</template>
 
 	<template v-else>
-		<h1>Cargando...</h1>
+		<section class="section">
+			<h2 class="text-center">Cargando...</h2>
+		</section>
 	</template>
 
 </template>

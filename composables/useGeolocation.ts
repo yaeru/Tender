@@ -1,6 +1,6 @@
 import { onUnmounted, onMounted, ref } from 'vue'
 
-export function useGeolocation(){
+export const useGeolocation = () => {
 	const kordinat = ref({ latitude: 0, longitude: 0 })
 	const isSupported = typeof window !== 'undefined' && 'navigator' in window && 'geolocation' in navigator
 

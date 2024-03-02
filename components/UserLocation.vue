@@ -1,4 +1,0 @@
-
-<template>
-	pepe
-</template>

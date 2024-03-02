@@ -46,49 +46,84 @@
 	};
 
 
-	// FORECAST FUNCTION
 	const isRainExpected = (threshold: number) => {
 		const currentHourIndex = hourly.time.findIndex((time: string) => {
 			const targetDateTime = new Date(time);
 			return targetDateTime.getHours() === new Date().getHours();
 		});
 
-		if (currentHourIndex !== -1) {
-			for (let i = currentHourIndex; i < hourly.time.length; i++) {
-				const rainProbability = hourly.precipitation_probability[i];
-				if (rainProbability >= threshold) {
-					return true;
+		if (typeof document !== 'undefined' && document.body) {
+			if (currentHourIndex !== -1) {
+				for (let i = currentHourIndex; i < hourly.time.length; i++) {
+					const rainProbability = hourly.precipitation_probability[i];
+					if (rainProbability >= threshold) {
+						document.body.className = 'bgrain'; // Cambia la clase del body a 'bgrain' si se espera lluvia
+						return true;
+					}
 				}
+				document.body.className = 'bgsunny';
+				return false;
+			} else {
+				return false;
 			}
-			return false;
 		} else {
 			return false;
 		}
 	};
 
+	onMounted(() => {
+		// Ejecutar isRainExpected después de que el componente se haya montado para cambiar la clase del body
+		isRainExpected(threshold);
+	});
 </script>
 
 <template>
-	<h2>Hoy es {{ currentDate }} - {{ currentTime }} </h2>
-	<div v-if="isRainExpected(threshold)">
-		<div class="card">
-			<h2>
-				Entrá el Tender que va a llover.
-			</h2>
-			<p>La probabilidad de lluvia es mayor a {{threshold}}%</p>
-		</div>
-	</div>
-	<div v-else>
-		Aprovechá el solcito.
-		<p>La probabilidad de lluvia es menor a {{threshold}}%</p>
-	</div>
+	<section class="section">
+		<template v-if="isRainExpected(threshold)">
+			<div class="card card-rain text-center">
+				<p class="emoji">
+					🌧️
+				</p>
+				<h2 class="title">
+					Entrá el Tender que va a llover.
+				</h2>
+				<p class="description">La probabilidad de lluvia es mayor a {{threshold}}%</p>
+			</div>
+		</template>
+		<template v-else>
+			<div class="card card-sunny text-center">
+				<p class="emoji">
+					😎
+				</p>
+				<h2 class="title">
+					Aprovechá el solcito.
+				</h2>
 
-	<div>
-		<h2>Detalles</h2>
-		<ul>
-			<li v-for="(time, index) in hourly.time" :key="index" :style="{ display: isTimePast(time) ? 'none' : 'list-item' }">
-				{{ formatDate(time) }} - {{ formatTime(time) }} - Probability: {{ hourly.precipitation_probability[index] }}%
-			</li>
-		</ul>
-	</div>
+				<p class="description">La probabilidad de lluvia es menor a {{threshold}}%</p>
+			</div>
+		</template>
+	</section>
+
+	<section id="forecast" class="section text-center">
+		<div class="card card-default">
+			<h2>Pronóstico</h2>
+			<ul>
+				<li v-for="(time, index) in hourly.time" :key="index" :style="{ display: isTimePast(time) ? 'none' : 'list-item' }">
+					{{ formatTime(time) }} - Chances de que se moje: {{ hourly.precipitation_probability[index] }}%
+				</li>
+			</ul>
+		</div>
+	</section>
+
+	<section id="debug" class="section">
+		<div>
+			<h2>Debug</h2>
+			<h2>Hoy es {{ currentDate }} - {{ currentTime }} </h2>
+			<ul>
+				<li v-for="(time, index) in hourly.time" :key="index" :style="{ color: isTimePast(time) ? 'red' : 'black' }">
+					{{ formatDate(time) }} - {{ formatTime(time) }} - Probability: {{ hourly.precipitation_probability[index] }}%
+				</li>
+			</ul>
+		</div>
+	</section>
 </template>

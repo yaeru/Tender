@@ -1,1 +1,125 @@
-body {}
+:root {
+	--primary: blue;
+	--secondary: orange;
+	--font: 'Arial', sans-serif;
+	--color: black;
+	--bgcolor: white;
+	--bgcolorrain: #03a9f4;
+	--bgcolorrain-l: #3fc3ff;
+	--bgcolorrain-b: #7ad6ff;
+	--bgcolorsunny: #FFC107;
+	--bgcolorsunny-l: #ffd507;
+	--bgcolorsunny-b: #f1ec54;
+	--bordercolor: #ccc;
+	--radius: 10px;
+	--contentwd: 760px;
+	font-size: 16px;
+}
+* {
+	padding: 0;
+	margin: 0;
+	font-family: var(--font);
+	line-height: 1.1em;
+}
+body {
+	background-color: var(--bgcolor);
+}
+.container {
+	margin-left: auto;
+	margin-right: auto;
+	padding-left: 1rem;
+	padding-right: 1rem;
+	max-width: var(--contentwd);
+}
+.section {
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+}
+.section+.section {
+	padding-top: 0;
+}
+@media (min-width: 981px) {
+	.container {
+		padding-left: 2rem;
+		padding-right: 2rem;
+	}
+	.section {
+		padding-top: 3rem;
+		padding-bottom: 3rem;
+	}
+}
+/* Colors */
+.bgrain {
+	background-color: var(--bgcolorrain);
+}
+.bgsunny {
+	background-color: var(--bgcolorsunny);
+}
+
+/* Text */
+h1, h2, h3, h4 {
+	margin-bottom: 1rem;
+	line-height: 1.1em;
+}
+.text-center {
+	text-align: center;
+}
+
+/* Card */
+.card {
+	padding: 2rem 1rem;
+	border: solid 1px var(--bordercolor);
+	border-radius: var(--radius);
+	box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+@media (min-width: 981px) {
+	.card {
+		padding: 3rem 2rem;
+	}
+}
+.card-default {
+	border-width: 0;
+	border-radius: var(--radius);
+	box-shadow: none;
+	background-color: rgba(256, 256, 256, 0.1);
+	color: white;
+	text-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+.card-default ul {
+	list-style: none;
+}
+.card-rain {
+	background-color: var(--bgcolorrain-l);
+	border-color: var(--bgcolorrain-b);
+	color: white;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.card-sunny {
+	background-color: var(--bgcolorsunny-l);
+	border-color: var(--bgcolorsunny-b);
+	color: white;
+	text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+.emoji {
+	margin-bottom: 1.5rem;
+	font-size: 4rem;
+}
+.title {
+	font-size: 2.5rem;
+	text-wrap: balance;
+}
+.description {
+	font-size: 1.2rem;
+	text-wrap: balance;
+}
+@media (min-width: 981px) {
+	.emoji {
+	font-size: 7rem;
+}
+	.title {
+		font-size: 3.5rem;
+	}
+	.description {
+		font-size: 1.7rem;
+	}
+}

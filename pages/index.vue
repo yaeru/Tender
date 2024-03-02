@@ -1,4 +1,9 @@
 <script setup lang="ts">
+	// Variable para controlar la carga de la API
+	const loading = ref(true);
+
+	
+
 	const params = {
 		"latitude": -34.9215,
 		"longitude": -57.9545,
@@ -78,57 +83,61 @@
 </script>
 
 <template>
-	<section class="section">
-		<UserLocation />
-	</section>
+	<template v-if="!loading">
 
-	<section class="section">
-		<template v-if="isRainExpected(threshold)">
-			<div class="card card-rain text-center">
-				<p class="emoji">
-					🌧️
-				</p>
-				<h2 class="title">
-					Entrá el Tender que va a llover.
-				</h2>
-				<p class="description">La probabilidad de lluvia es mayor a {{threshold}}%</p>
+		<section class="section">
+			<template v-if="isRainExpected(threshold)">
+				<div class="card card-rain text-center">
+					<p class="emoji">
+						🌧️
+					</p>
+					<h2 class="title">
+						Entrá el Tender que va a llover.
+					</h2>
+					<p class="description">La probabilidad de lluvia es mayor a {{threshold}}%</p>
+				</div>
+			</template>
+
+			<template v-else>
+				<div class="card card-sunny text-center">
+					<p class="emoji">
+						😎
+					</p>
+					<h2 class="title">
+						Aprovechá el solcito.
+					</h2>
+
+					<p class="description">La probabilidad de lluvia es menor a {{threshold}}%</p>
+				</div>
+			</template>
+		</section>
+
+		<section id="forecast" class="section text-center">
+			<div class="card card-default">
+				<h2>Pronóstico</h2>
+				<ul>
+					<li v-for="(time, index) in hourly.time" :key="index" :style="{ display: isTimePast(time) ? 'none' : 'list-item' }">
+						{{ formatTime(time) }} - Chances de que se moje: {{ hourly.precipitation_probability[index] }}%
+					</li>
+				</ul>
 			</div>
-		</template>
-		
-		<template v-else>
-			<div class="card card-sunny text-center">
-				<p class="emoji">
-					😎
-				</p>
-				<h2 class="title">
-					Aprovechá el solcito.
-				</h2>
+		</section>
 
-				<p class="description">La probabilidad de lluvia es menor a {{threshold}}%</p>
+		<section id="debug" class="section">
+			<div>
+				<h2>Debug</h2>
+				<h2>Hoy es {{ currentDate }} - {{ currentTime }} </h2>
+				<ul>
+					<li v-for="(time, index) in hourly.time" :key="index" :style="{ color: isTimePast(time) ? 'red' : 'black' }">
+						{{ formatDate(time) }} - {{ formatTime(time) }} - Probability: {{ hourly.precipitation_probability[index] }}%
+					</li>
+				</ul>
 			</div>
-		</template>
-	</section>
+		</section>
+	</template>
 
-	<section id="forecast" class="section text-center">
-		<div class="card card-default">
-			<h2>Pronóstico</h2>
-			<ul>
-				<li v-for="(time, index) in hourly.time" :key="index" :style="{ display: isTimePast(time) ? 'none' : 'list-item' }">
-					{{ formatTime(time) }} - Chances de que se moje: {{ hourly.precipitation_probability[index] }}%
-				</li>
-			</ul>
-		</div>
-	</section>
+	<template v-else>
+		<h1>Cargando...</h1>
+	</template>
 
-	<section id="debug" class="section">
-		<div>
-			<h2>Debug</h2>
-			<h2>Hoy es {{ currentDate }} - {{ currentTime }} </h2>
-			<ul>
-				<li v-for="(time, index) in hourly.time" :key="index" :style="{ color: isTimePast(time) ? 'red' : 'black' }">
-					{{ formatDate(time) }} - {{ formatTime(time) }} - Probability: {{ hourly.precipitation_probability[index] }}%
-				</li>
-			</ul>
-		</div>
-	</section>
 </template>
